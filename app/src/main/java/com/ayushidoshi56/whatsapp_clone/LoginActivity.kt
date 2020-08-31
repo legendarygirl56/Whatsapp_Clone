@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_login.*
 import androidx.core.widget.addTextChangedListener as addTextChangedListener1
 
@@ -33,7 +34,6 @@ class LoginActivity : AppCompatActivity() {
         })
 
         nextbtn.setOnClickListener {
-            Toast.makeText(this,"djf",Toast.LENGTH_LONG).show()
             checkNum()
         }
 
@@ -42,6 +42,29 @@ class LoginActivity : AppCompatActivity() {
     private fun checkNum() {
         countrycode = ccp.selectedCountryCodeWithPlus
         phonenum = countrycode + PhoneNumEt.text.toString()
+
+        notifyUser()
     }
+
+    private fun notifyUser() {
+        MaterialAlertDialogBuilder(this).apply {
+            setMessage("We will be verifying the phone number: ${PhoneNumEt.text}  \n" + "Is this ok, or would you like to edit the number?")
+            setPositiveButton("OK"){_,_ ->
+                showOptActivity()
+            }
+            setNegativeButton("Edit"){dialog, which->
+                dialog.dismiss()
+            }
+            setCancelable(false)
+            create()
+            show()
+        }
+    }
+
+    private fun showOptActivity() {
+        Toast.makeText(this,"djf",Toast.LENGTH_LONG).show()
+    }
+
+
 }
 
